@@ -1,0 +1,55 @@
+/* DriverIncome.css */
+h3 {
+    color: #555;
+    font-size: 1.2em;
+  }
+  
+  input {
+    margin: 5px 0;
+    padding: 8px;
+    width: 250px;
+    font-size: 14px;
+  }
+  
+  input[type="date"]:focus, input[type="number"]:focus {
+    border-color: #4CAF50;
+  }
+  
+  button {
+    font-size: 14px;
+  }
+  
+  .income-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .income-list {
+    margin-top: 20px;
+  }
+  
+  .income-list li {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .income-list button {
+    background-color: #2196F3;
+  }
+  
+  .income-list button:hover {
+    background-color: #1976D2;
+  }
+  
+  .income-list button.delete {
+    background-color: #f44336;
+  }
+  
+  .income-list button.delete:hover {
+    background-color: #e53935;
+  }
+  

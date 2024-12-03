@@ -1,0 +1,55 @@
+/* General styles for body, header, and footer */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+header nav ul {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+header nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+
+/* Styling for lists */
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  padding: 8px;
+  background-color: white;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+h2 {
+  color: #333;
+}

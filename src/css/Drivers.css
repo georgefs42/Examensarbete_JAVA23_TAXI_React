@@ -1,0 +1,55 @@
+/* Drivers.css */
+h3 {
+    color: #555;
+    font-size: 1.2em;
+  }
+  
+  input {
+    margin: 5px 0;
+    padding: 8px;
+    width: 250px;
+    font-size: 14px;
+  }
+  
+  input[type="text"]:focus {
+    border-color: #4CAF50;
+  }
+  
+  button {
+    font-size: 14px;
+  }
+  
+  .add-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .driver-list {
+    margin-top: 20px;
+  }
+  
+  .driver-list li {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .driver-list button {
+    background-color: #2196F3;
+  }
+  
+  .driver-list button:hover {
+    background-color: #1976D2;
+  }
+  
+  .driver-list button.delete {
+    background-color: #f44336;
+  }
+  
+  .driver-list button.delete:hover {
+    background-color: #e53935;
+  }
+  
