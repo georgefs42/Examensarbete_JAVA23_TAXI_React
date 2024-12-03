@@ -1,55 +1,104 @@
-/* DriverIncome.css */
-h3 {
-    color: #555;
-    font-size: 1.2em;
+/* Driver Income Page Styles */
+.driver-income-container {
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.income-form,
+.calculated-income {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+
+.income-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.income-form button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.income-form button:hover {
+  background-color: #2980b9;
+}
+
+.calculated-income p {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.calculated-income .profit {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button-container button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button-container button:hover {
+  background-color: #2ecc71;
+}
+
+.status-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.status-message.success {
+  color: #27ae60;
+}
+
+.status-message.error {
+  color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .driver-income-container {
+    padding: 10px;
   }
-  
-  input {
-    margin: 5px 0;
-    padding: 8px;
-    width: 250px;
-    font-size: 14px;
+
+  .income-form input {
+    font-size: 0.9rem;
   }
-  
-  input[type="date"]:focus, input[type="number"]:focus {
-    border-color: #4CAF50;
+
+  .submit-button-container button {
+    font-size: 0.9rem;
   }
-  
-  button {
-    font-size: 14px;
-  }
-  
-  .income-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .income-list {
-    margin-top: 20px;
-  }
-  
-  .income-list li {
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .income-list button {
-    background-color: #2196F3;
-  }
-  
-  .income-list button:hover {
-    background-color: #1976D2;
-  }
-  
-  .income-list button.delete {
-    background-color: #f44336;
-  }
-  
-  .income-list button.delete:hover {
-    background-color: #e53935;
-  }
-  
+}

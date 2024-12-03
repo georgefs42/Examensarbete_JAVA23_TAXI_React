@@ -1,55 +1,89 @@
-/* Drivers.css */
-h3 {
-    color: #555;
-    font-size: 1.2em;
+/* Drivers Page Styles */
+.drivers-container {
+  padding: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.add-driver-form,
+.edit-driver-form {
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+
+.add-driver-form input,
+.edit-driver-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.add-driver-form button,
+.edit-driver-form button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.add-driver-form button:hover,
+.edit-driver-form button:hover {
+  background-color: #2980b9;
+}
+
+.driver-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.driver-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.driver-list button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.driver-list button:hover {
+  background-color: #c0392b;
+}
+
+@media (max-width: 768px) {
+  .drivers-container {
+    padding: 10px;
   }
-  
-  input {
-    margin: 5px 0;
-    padding: 8px;
-    width: 250px;
-    font-size: 14px;
+
+  .add-driver-form input,
+  .edit-driver-form input {
+    font-size: 0.9rem;
   }
-  
-  input[type="text"]:focus {
-    border-color: #4CAF50;
-  }
-  
-  button {
-    font-size: 14px;
-  }
-  
-  .add-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .driver-list {
-    margin-top: 20px;
-  }
-  
-  .driver-list li {
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .driver-list button {
-    background-color: #2196F3;
-  }
-  
-  .driver-list button:hover {
-    background-color: #1976D2;
-  }
-  
-  .driver-list button.delete {
-    background-color: #f44336;
-  }
-  
-  .driver-list button.delete:hover {
-    background-color: #e53935;
-  }
-  
+}
