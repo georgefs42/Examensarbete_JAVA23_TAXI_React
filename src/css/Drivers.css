@@ -1,32 +1,50 @@
 /* Drivers Page Styles */
 .drivers-container {
-  padding: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  font-weight: 700;
 }
 
 .add-driver-form,
 .edit-driver-form {
-  background-color: white;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-driver-form:hover,
+.edit-driver-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .add-driver-form input,
 .edit-driver-form input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 12px;
+  margin-bottom: 18px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.add-driver-form input:focus,
+.edit-driver-form input:focus {
+  border-color: #3498db;
+  outline: none;
 }
 
 .add-driver-form button,
@@ -34,56 +52,87 @@ h2 {
   background-color: #3498db;
   color: white;
   border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 12px 25px;
+  font-size: 1.1rem;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .add-driver-form button:hover,
 .edit-driver-form button:hover {
   background-color: #2980b9;
+  transform: scale(1.05);
 }
 
 .driver-list ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .driver-list li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
-  padding: 15px;
-  margin-bottom: 10px;
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.driver-list li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .driver-list button {
   background-color: #e74c3c;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 8px 15px;
   font-size: 1rem;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .driver-list button:hover {
   background-color: #c0392b;
+  transform: scale(1.05);
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .drivers-container {
-    padding: 10px;
+    padding: 20px;
+  }
+
+  .add-driver-form,
+  .edit-driver-form {
+    padding: 20px;
   }
 
   .add-driver-form input,
   .edit-driver-form input {
     font-size: 0.9rem;
+  }
+
+  .add-driver-form button,
+  .edit-driver-form button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .driver-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .driver-list button {
+    width: 100%;
+    margin-top: 10px;
   }
 }
