@@ -1,26 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../css/header.css';
+import { useState } from 'react';
+import '../css/Header.css'; // Import the CSS file
 
 
-const Header = ({ setUser }) => {
-  const handleLogout = () => {
-    setUser(null); // Clear the user state on logout
-    // Optionally, redirect the user to the login page after logging out
-    window.location.href = '/login'; // Force a redirect to the login page
+const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prevState => !prevState);
   };
 
   return (
     <header className="header">
-      <div className="container">
-        <h1>Taxi Management</h1>
-        <nav>
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/drivers" className="nav-link">Drivers</Link>
-          <Link to="/driver-income" className="nav-link">Driver Income</Link>
-          <button onClick={handleLogout} className="logout-button">Logout</button>
-        </nav>
+      <div className="logo">
+        Stockholm <span className="highlight">TAXI</span> och Åkeri
       </div>
+      <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
+        <ul className={`nav-list ${isMenuOpen ? 'open' : ''}`}>
+          <li><a href="#booking">Booking</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#about">Work with us</a></li>
+          <li><a href="#about">Login</a></li>
+          
+        </ul>
+        <div className="menu-icon" onClick={toggleMenu}>
+          ☰
+        </div>
+      </nav>
     </header>
   );
 };
