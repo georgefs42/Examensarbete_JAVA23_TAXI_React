@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../css/admin/driversProfile.css";
 
 const DriversPage = () => {
@@ -16,6 +17,9 @@ const DriversPage = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [actionType, setActionType] = useState('');
   const [selectedDriverId, setSelectedDriverId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
+
+  const navigate = useNavigate(); // Initialize navigate hook
 
   // Ref for the edit section to scroll into view
   const editSectionRef = React.createRef();
@@ -48,6 +52,8 @@ const DriversPage = () => {
           email: "",
           photoUrl: "",
         });
+        setSuccessMessage("Driver added successfully!"); // Show success message
+        setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
       })
       .catch((error) => console.error("There was an error adding the driver!", error));
   };
@@ -62,6 +68,8 @@ const DriversPage = () => {
         );
         setDrivers(updatedDrivers);
         setEditDriver(null);
+        setSuccessMessage("Driver updated successfully!"); // Show success message
+        setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
       })
       .catch((error) => console.error("There was an error updating the driver!", error));
   };
@@ -102,9 +110,21 @@ const DriversPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Function to go back to the previous page
+  const handleFinish = () => {
+    navigate(-1); // This takes the user back to the previous page
+  };
+
   return (
     <div className="drivers-page">
       <h2>Drivers</h2>
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="success-message">
+          <p>{successMessage}</p>
+        </div>
+      )}
 
       {/* Button to go to top */}
       <button onClick={scrollToTop} className="scroll-to-top-btn">
@@ -249,6 +269,11 @@ const DriversPage = () => {
           ))}
         </ul>
       </div>
+
+      {/* Finish Button to go back to the previous page */}
+      <button onClick={handleFinish} className="finish-btn">
+        Finish
+      </button>
 
       {/* Confirmation Modal */}
       {showConfirmation && (
