@@ -1,290 +1,171 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import "../css/admin/driversProfile.css";
+import "../css/admin/DriverMonthlyReports.css";
 
 const DriversPage = () => {
-  const [drivers, setDrivers] = useState([]);
-  const [newDriver, setNewDriver] = useState({
-    name: "",
-    personalNumber: "",
-    address: "",
-    mobile: "",
-    email: "",
-    photoUrl: "",
+  const [reports, setReports] = useState([]);
+  const [message, setMessage] = useState('');
+  const [newReport, setNewReport] = useState({
+    driverId: '',
+    periodFrom: '',
+    periodTo: ''
   });
-  const [editDriver, setEditDriver] = useState(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
-  const [actionType, setActionType] = useState('');
-  const [selectedDriverId, setSelectedDriverId] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(""); // New state for success message
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const navigate = useNavigate(); // Initialize navigate hook
-
-  // Ref for the edit section to scroll into view
-  const editSectionRef = React.createRef();
-
-  // Fetch all drivers
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/drivers")
-      .then((response) => setDrivers(response.data))
-      .catch((error) => console.error("There was an error fetching the drivers!", error));
+    fetchReports();
+
+    // Scroll event to handle scroll-to-top button visibility
+    window.onscroll = () => {
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
   }, []);
 
-  // Handle change for input fields
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewDriver({ ...newDriver, [name]: value });
-  };
-
-  // Add new driver
-  const handleAddDriver = () => {
-    axios
-      .post("http://localhost:8080/drivers", newDriver)
-      .then((response) => {
-        setDrivers([...drivers, response.data]);
-        setNewDriver({
-          name: "",
-          personalNumber: "",
-          address: "",
-          mobile: "",
-          email: "",
-          photoUrl: "",
-        });
-        setSuccessMessage("Driver added successfully!"); // Show success message
-        setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
-      })
-      .catch((error) => console.error("There was an error adding the driver!", error));
-  };
-
-  // Edit driver
-  const handleUpdateDriver = () => {
-    axios
-      .put(`http://localhost:8080/drivers/${editDriver.driverId}`, editDriver)
-      .then((response) => {
-        const updatedDrivers = drivers.map((driver) =>
-          driver.driverId === editDriver.driverId ? response.data : driver
-        );
-        setDrivers(updatedDrivers);
-        setEditDriver(null);
-        setSuccessMessage("Driver updated successfully!"); // Show success message
-        setTimeout(() => setSuccessMessage(""), 3000); // Clear message after 3 seconds
-      })
-      .catch((error) => console.error("There was an error updating the driver!", error));
-  };
-
-  // Delete driver
-  const handleDeleteDriver = (id) => {
-    axios
-      .delete(`http://localhost:8080/drivers/${id}`)
-      .then(() => {
-        setDrivers(drivers.filter((driver) => driver.driverId !== id));
-      })
-      .catch((error) => console.error("There was an error deleting the driver!", error));
-  };
-
-  // Scroll to edit section when Edit button is clicked
-  const handleEditClick = (driver) => {
-    setEditDriver(driver);
-    // Scroll to the edit section
-    editSectionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  // Confirm delete action
-  const handleConfirmation = (type, id) => {
-    setActionType(type);
-    setSelectedDriverId(id);
-    setShowConfirmation(true);
-  };
-
-  const confirmAction = () => {
-    if (actionType === "delete") {
-      handleDeleteDriver(selectedDriverId);
+  // Fetch reports from the backend
+  const fetchReports = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/monthly-rapport');
+      const data = await response.json();
+      setReports(data);
+    } catch (error) {
+      setMessage('Error fetching reports');
     }
-    setShowConfirmation(false);
   };
 
-  // Scroll to the top function
+  // Create a new report
+  const handleCreateReport = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/monthly-rapport', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newReport)
+      });
+      if (response.ok) {
+        setMessage('Report created successfully!');
+        fetchReports();
+      } else {
+        setMessage('Error creating report');
+      }
+    } catch (error) {
+      setMessage('Error creating report');
+    }
+  };
+
+  // Delete a report
+  const handleDeleteReport = async (driverId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/monthly-rapport/${driverId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setMessage('Report deleted successfully!');
+        fetchReports();
+      } else {
+        setMessage('Error deleting report');
+      }
+    } catch (error) {
+      setMessage('Error deleting report');
+    }
+  };
+
+  // Scroll to the top of the page
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Function to go back to the previous page
+  // Navigate back to the previous page
   const handleFinish = () => {
-    navigate(-1); // This takes the user back to the previous page
+    window.history.back();
+  };
+
+  // Function to format numbers as SEK (Swedish Krona)
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('sv-SE', {
+      style: 'currency',
+      currency: 'SEK',
+    }).format(amount);
   };
 
   return (
-    <div className="drivers-page">
-      <h2>Drivers contact information</h2>
+    <div className="driver-monthly-report">
+      <button className="finish-button" onClick={handleFinish}>Finish</button>
+      <h1>Monthly Reports</h1>
 
-      {/* Success Message */}
-      {successMessage && (
-        <div className="success-message">
-          <p>{successMessage}</p>
+      {/* Create new report form */}
+      <section>
+        <h2>Create New Report</h2>
+        
+        {/* Driver ID, Period From, and Period To */}
+        <div className="form-field">
+          <label htmlFor="driverId">Driver ID</label>
+          <input
+            id="driverId"
+            type="text"
+            placeholder="Driver ID"
+            value={newReport.driverId}
+            onChange={(e) => setNewReport({ ...newReport, driverId: e.target.value })}
+          />
         </div>
-      )}
 
-      {/* Button to go to top */}
-      <button onClick={scrollToTop} className="scroll-to-top-btn">
-        ↑ Go to Top
-      </button>
+        <div className="form-field">
+          <label htmlFor="periodFrom">Period From</label>
+          <input
+            id="periodFrom"
+            type="date"
+            value={newReport.periodFrom}
+            onChange={(e) => setNewReport({ ...newReport, periodFrom: e.target.value })}
+          />
+        </div>
 
-      {/* Add Driver Form */}
-      <div className="add-driver-section">
-        <h3>Add New Driver</h3>
-        <form className="driver-form">
+        <div className="form-field">
+          <label htmlFor="periodTo">Period To</label>
           <input
-            type="text"
-            name="name"
-            value={newDriver.name}
-            onChange={handleInputChange}
-            placeholder="George Youssef"
+            id="periodTo"
+            type="date"
+            value={newReport.periodTo}
+            onChange={(e) => setNewReport({ ...newReport, periodTo: e.target.value })}
           />
-          <input
-            type="text"
-            name="personalNumber"
-            value={newDriver.personalNumber}
-            onChange={handleInputChange}
-            placeholder="YYYYMMDD-1234"
-          />
-          <input
-            type="text"
-            name="address"
-            value={newDriver.address}
-            onChange={handleInputChange}
-            placeholder="Svalvägen 39, 181 56 Lidingö"
-          />
-          <input
-            type="text"
-            name="mobile"
-            value={newDriver.mobile}
-            onChange={handleInputChange}
-            placeholder="0701234567"
-          />
-          <input
-            type="text"
-            name="email"
-            value={newDriver.email}
-            onChange={handleInputChange}
-            placeholder="info@georgedev.se"
-          />
-          <input
-            type="text"
-            name="photoUrl"
-            value={newDriver.photoUrl}
-            onChange={handleInputChange}
-            placeholder="www.example.se/photo.jpeg"
-          />
-          <div className="photo-preview-section">
-            {newDriver.photoUrl && (
-              <div className="photo-preview">
-                <img src={newDriver.photoUrl} alt="Photo preview" className="photo-preview-img" />
-              </div>
-            )}
-          </div>
-          <button type="button" onClick={handleAddDriver}>
-            Add Driver
-          </button>
-        </form>
-      </div>
+        </div>
 
-      {/* Edit Driver Form */}
-      <div className="edit-driver-section" ref={editSectionRef}>
-        <h3>Edit Driver</h3>
-        {editDriver && (
-          <form className="driver-form">
-            <input
-              type="text"
-              name="name"
-              value={editDriver.name}
-              onChange={(e) => setEditDriver({ ...editDriver, name: e.target.value })}
-              placeholder="Name"
-            />
-            <input
-              type="text"
-              name="personalNumber"
-              value={editDriver.personalNumber}
-              onChange={(e) =>
-                setEditDriver({ ...editDriver, personalNumber: e.target.value })
-              }
-              placeholder="Personal Number"
-            />
-            <input
-              type="text"
-              name="address"
-              value={editDriver.address}
-              onChange={(e) => setEditDriver({ ...editDriver, address: e.target.value })}
-              placeholder="Address"
-            />
-            <input
-              type="text"
-              name="mobile"
-              value={editDriver.mobile}
-              onChange={(e) => setEditDriver({ ...editDriver, mobile: e.target.value })}
-              placeholder="Mobile"
-            />
-            <input
-              type="text"
-              name="email"
-              value={editDriver.email}
-              onChange={(e) => setEditDriver({ ...editDriver, email: e.target.value })}
-              placeholder="Email"
-            />
-            <input
-              type="text"
-              name="photoUrl"
-              value={editDriver.photoUrl}
-              onChange={(e) => setEditDriver({ ...editDriver, photoUrl: e.target.value })}
-              placeholder="Photo URL"
-            />
-            <div className="photo-preview-section">
-              {editDriver.photoUrl && (
-                <div className="photo-preview">
-                  <img src={editDriver.photoUrl} alt="Photo preview" className="photo-preview-img" />
-                </div>
-              )}
+        {/* Create button */}
+        <button onClick={handleCreateReport}>Create Report</button>
+      </section>
+
+      {/* Show message after each action */}
+      {message && <div className="message">{message}</div>}
+
+      {/* Display list of reports */}
+      <section>
+        <h2>Existing Reports</h2>
+        {reports.length > 0 ? (
+          reports.map((report) => (
+            <div key={report.driverId} className="report">
+              <p><strong>Driver ID: {report.driverId}</strong></p>
+              <p>Name: {report.name}</p>
+              <p>Personal Number: {report.personalNumber}</p>
+              {/* Format total profit as SEK */}
+              <p>Total Profit: {formatCurrency(report.totalProfit)}</p>
+              <p>Period: {report.periodFrom} - {report.periodTo}</p>
+
+              {/* Delete button */}
+              <button onClick={() => handleDeleteReport(report.driverId)}>Delete</button>
             </div>
-            <button type="button" onClick={handleUpdateDriver}>
-              Update Driver
-            </button>
-          </form>
+          ))
+        ) : (
+          <p>No reports available</p>
         )}
-      </div>
+      </section>
 
-      {/* Driver List */}
-      <div className="drivers-list">
-        <h3>Driver List</h3>
-        <ul>
-          {drivers.map((driver) => (
-            <li key={driver.driverId}>
-              <div>
-                <strong>{driver.name}</strong> ({driver.personalNumber}) <br />
-                Address: {driver.address}, Mobile: {driver.mobile}, Email: {driver.email}
-              </div>
-              <button onClick={() => handleEditClick(driver)}>Edit</button>
-              <button onClick={() => handleConfirmation('delete', driver.driverId)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Finish Button to go back to the previous page */}
-      <button onClick={handleFinish} className="finish-btn">
-        Finish
+      {/* Scroll to Top button */}
+      <button
+        className={`scroll-top ${showScrollTop ? 'show' : ''}`}
+        onClick={scrollToTop}
+      >
+        ↑
       </button>
-
-      {/* Confirmation Modal */}
-      {showConfirmation && (
-        <div className="confirmation-modal active">
-          <div className="modal-content">
-            <p>Are you sure you want to {actionType} this driver?</p>
-            <button className="confirm-btn" onClick={confirmAction}>Confirm</button>
-            <button className="cancel-btn" onClick={() => setShowConfirmation(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
