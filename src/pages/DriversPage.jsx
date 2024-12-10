@@ -1,171 +1,272 @@
 import React, { useState, useEffect } from "react";
-import "../css/admin/DriverMonthlyReports.css";
+import axios from "axios";
+import { jsPDF } from "jspdf";
+import "../css/admin/salaryReport.css";
+
+const API_URL = 'http://localhost:8080/salary-report';
 
 const DriversPage = () => {
-  const [reports, setReports] = useState([]);
-  const [message, setMessage] = useState('');
-  const [newReport, setNewReport] = useState({
+  const [salaryReports, setSalaryReports] = useState([]);
+  const [newSalaryReport, setNewSalaryReport] = useState({
     driverId: '',
-    periodFrom: '',
-    periodTo: ''
+    month: '',
+    year: '',
+    tax: '',
   });
-  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const [editSalaryReport, setEditSalaryReport] = useState(null);
 
   useEffect(() => {
-    fetchReports();
-
-    // Scroll event to handle scroll-to-top button visibility
-    window.onscroll = () => {
-      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        setShowScrollTop(true);
-      } else {
-        setShowScrollTop(false);
-      }
-    };
+    fetchSalaryReports();
   }, []);
 
-  // Fetch reports from the backend
-  const fetchReports = async () => {
+  const fetchSalaryReports = async () => {
     try {
-      const response = await fetch('http://localhost:8080/monthly-rapport');
-      const data = await response.json();
-      setReports(data);
+      const response = await axios.get(API_URL);
+      setSalaryReports(response.data);
     } catch (error) {
-      setMessage('Error fetching reports');
+      console.error('Error fetching salary reports:', error.message);
     }
   };
 
-  // Create a new report
-  const handleCreateReport = async () => {
+  const handleCreate = async (e) => {
+    e.preventDefault();
+
+    // Validate required fields
+    if (!newSalaryReport.driverId || !newSalaryReport.month || !newSalaryReport.year || !newSalaryReport.tax) {
+      alert('All fields are required!');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:8080/monthly-rapport', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newReport)
-      });
-      if (response.ok) {
-        setMessage('Report created successfully!');
-        fetchReports();
-      } else {
-        setMessage('Error creating report');
-      }
+      const response = await axios.post(API_URL, newSalaryReport);
+      setSalaryReports((prev) => [...prev, response.data]);
+      fetchSalaryReports();  // Optionally, refetch the reports after creation
+      resetForm();
     } catch (error) {
-      setMessage('Error creating report');
+      console.error('Error creating salary report:', error.message);
+      alert('Error creating salary report. Please try again.');
     }
   };
 
-  // Delete a report
-  const handleDeleteReport = async (driverId) => {
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    // Ensure there is an editSalaryReport to update
+    if (!editSalaryReport) return;
+
+    // Validate required fields
+    if (!newSalaryReport.driverId || !newSalaryReport.month || !newSalaryReport.year || !newSalaryReport.tax) {
+      alert('All fields are required!');
+      return;
+    }
+
     try {
-      const response = await fetch(`http://localhost:8080/monthly-rapport/${driverId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        setMessage('Report deleted successfully!');
-        fetchReports();
-      } else {
-        setMessage('Error deleting report');
-      }
+      const response = await axios.put(`${API_URL}/${editSalaryReport.id}`, newSalaryReport);
+      setSalaryReports((prev) =>
+        prev.map((report) =>
+          report.id === response.data.id ? response.data : report
+        )
+      );
+      fetchSalaryReports();  // Optionally, refetch the reports after update
+      resetForm();
+      setEditSalaryReport(null);  // Exit edit mode
     } catch (error) {
-      setMessage('Error deleting report');
+      console.error('Error updating salary report:', error.message);
+      alert('Error updating salary report. Please try again.');
     }
   };
 
-  // Scroll to the top of the page
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setSalaryReports((prev) => prev.filter((report) => report.id !== id));
+    } catch (error) {
+      console.error('Error deleting salary report:', error.message);
+      alert('Error deleting salary report. Please try again.');
+    }
   };
 
-  // Navigate back to the previous page
-  const handleFinish = () => {
-    window.history.back();
+  const handleDownloadPdf = (report) => {
+    const doc = new jsPDF();
+
+    // Add company details at the top of the PDF
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text("Stockholm Taxi och Åkeri", 20, 20);
+    doc.text("Org.Nummer: 790804-1515", 20, 30);
+    doc.text("Drottning Kristinas väg 115, 761 42 Norrtälje", 20, 40);
+    doc.text("Mobil: 070 -290 33 83", 20, 50);
+    doc.text("------------------------------------------------------------", 20, 60); // Separator line
+
+    // Add report details: Name, Personal Number, Month, Year
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Salary Report for: ${report.name || 'N/A'}`, 20, 70); // Driver Name (or N/A if not available)
+    doc.text(`Personal Number: ${report.personalNumber || 'N/A'}`, 20, 80); // Personal Number (or N/A if not available)
+    doc.text(`Month: ${report.month}`, 20, 90); // Month
+    doc.text(`Year: ${report.year}`, 20, 100); // Year
+    doc.text("------------------------------------------------------------", 20, 110); // Separator line
+
+    // Add the salary details
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Tax: ${formatCurrency(report.tax)}`, 20, 120);
+    doc.text(`Total Profit: ${formatCurrency(report.totalProfit)}`, 20, 130);
+    doc.text(`Salary After Tax: ${formatCurrency(report.salaryAfterTax)}`, 20, 140);
+
+    // Save the PDF with a dynamic filename
+    doc.save(`Salary_Report_${report.driverId}_${report.month}_${report.year}.pdf`);
   };
 
-  // Function to format numbers as SEK (Swedish Krona)
-  const formatCurrency = (amount) => {
+  const resetForm = () => {
+    setNewSalaryReport({
+      driverId: '',
+      month: '',
+      year: '',
+      tax: '',
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewSalaryReport((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleEdit = (report) => {
+    setEditSalaryReport(report);
+    setNewSalaryReport({
+      driverId: report.driverId,
+      month: report.month,
+      year: report.year,
+      tax: report.tax,
+    });
+  };
+
+  // Helper function to format numbers as SEK
+  const formatCurrency = (value) => {
     return new Intl.NumberFormat('sv-SE', {
       style: 'currency',
       currency: 'SEK',
-    }).format(amount);
+      minimumFractionDigits: 2
+    }).format(value);
   };
 
   return (
-    <div className="driver-monthly-report">
-      <button className="finish-button" onClick={handleFinish}>Finish</button>
-      <h1>Monthly Reports</h1>
+    <div className="drivers-page">
+      <h1>Salary Reports</h1>
 
-      {/* Create new report form */}
-      <section>
-        <h2>Create New Report</h2>
-        
-        {/* Driver ID, Period From, and Period To */}
-        <div className="form-field">
-          <label htmlFor="driverId">Driver ID</label>
-          <input
-            id="driverId"
-            type="text"
-            placeholder="Driver ID"
-            value={newReport.driverId}
-            onChange={(e) => setNewReport({ ...newReport, driverId: e.target.value })}
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="periodFrom">Period From</label>
-          <input
-            id="periodFrom"
-            type="date"
-            value={newReport.periodFrom}
-            onChange={(e) => setNewReport({ ...newReport, periodFrom: e.target.value })}
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="periodTo">Period To</label>
-          <input
-            id="periodTo"
-            type="date"
-            value={newReport.periodTo}
-            onChange={(e) => setNewReport({ ...newReport, periodTo: e.target.value })}
-          />
-        </div>
-
-        {/* Create button */}
-        <button onClick={handleCreateReport}>Create Report</button>
-      </section>
-
-      {/* Show message after each action */}
-      {message && <div className="message">{message}</div>}
-
-      {/* Display list of reports */}
-      <section>
-        <h2>Existing Reports</h2>
-        {reports.length > 0 ? (
-          reports.map((report) => (
-            <div key={report.driverId} className="report">
-              <p><strong>Driver ID: {report.driverId}</strong></p>
-              <p>Name: {report.name}</p>
-              <p>Personal Number: {report.personalNumber}</p>
-              {/* Format total profit as SEK */}
-              <p>Total Profit: {formatCurrency(report.totalProfit)}</p>
-              <p>Period: {report.periodFrom} - {report.periodTo}</p>
-
-              {/* Delete button */}
-              <button onClick={() => handleDeleteReport(report.driverId)}>Delete</button>
-            </div>
-          ))
-        ) : (
-          <p>No reports available</p>
-        )}
-      </section>
-
-      {/* Scroll to Top button */}
-      <button
-        className={`scroll-top ${showScrollTop ? 'show' : ''}`}
-        onClick={scrollToTop}
+      <form
+        className="salary-form"
+        onSubmit={editSalaryReport ? handleUpdate : handleCreate}
       >
-        ↑
-      </button>
+        <h2>{editSalaryReport ? 'Edit' : 'Create'} Salary Report</h2>
+        <div className="form-group">
+          <label htmlFor="driverId">Driver ID:</label>
+          <input
+            type="number"
+            id="driverId"
+            name="driverId"
+            value={newSalaryReport.driverId}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="month">Month:</label>
+          <input
+            type="number"
+            id="month"
+            name="month"
+            value={newSalaryReport.month}
+            onChange={handleChange}
+            required
+            min="1"
+            max="12"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="year">Year:</label>
+          <input
+            type="number"
+            id="year"
+            name="year"
+            value={newSalaryReport.year}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="tax">Tax:</label>
+          <input
+            type="number"
+            id="tax"
+            name="tax"
+            value={newSalaryReport.tax}
+            onChange={handleChange}
+            required
+            step="0.01"
+          />
+        </div>
+        <button type="submit" className="btn-submit">
+          {editSalaryReport ? 'Update' : 'Create'} Salary Report
+        </button>
+      </form>
+
+      <h2>Salary Reports List</h2>
+      <table className="salary-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Driver ID</th>
+            <th>Name</th>
+            <th>Month</th>
+            <th>Year</th>
+            <th>Total Profit</th>
+            <th>Salary After Tax</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {salaryReports.map((report) => (
+            <tr key={report.id}>
+              <td>{report.id}</td>
+              <td>{report.driverId}</td>
+              <td>{report.name || 'N/A'}</td>
+              <td>{report.month}</td>
+              <td>{report.year}</td>
+              <td>{formatCurrency(report.totalProfit)}</td>
+              <td>{formatCurrency(report.salaryAfterTax)}</td>
+              <td>
+                <button
+                  className="btn-edit"
+                  aria-label="Edit Salary Report"
+                  onClick={() => handleEdit(report)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn-delete"
+                  aria-label="Delete Salary Report"
+                  onClick={() => handleDelete(report.id)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn-download-pdf"
+                  aria-label="Download Salary Report as PDF"
+                  onClick={() => handleDownloadPdf(report)}
+                >
+                  Download PDF
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
