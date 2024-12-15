@@ -1,56 +1,88 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import DriversPage from './pages/DriversPage';
-import DriverIncomePage from './pages/DriverIncomePage';
-import LoginPage from './components/LoginPage';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/auth/Login';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import DriverDashboard from './pages/driver/DriverDashboard';
+import DriverProfile from './pages/admin/DriverProfile'; // Import DriverProfile
+import DriverMonthlyReports from './pages/admin/DriverMonthlyReports'; // Import DriverMonthlyReports
+import DriverSalaryReport from './pages/admin/DriverSalaryReport'; // Import DriverSalaryReport
 import Header from './components/Header';
 import Footer from './components/Footer';
-import './css/main.css'; 
-import './css/header.css'; 
-import './css/footer.css';
-
 
 const App = () => {
-  const [user, setUser] = useState(null); // Manage logged-in user state
+  const [userRole, setUserRole] = useState(null); // State to track user role ('ADMIN' or 'USER')
+
+  const handleLogin = (role) => {
+    setUserRole(role); // Set user role on login
+  };
+
+  const handleLogout = () => {
+    setUserRole(null); // Clear user role on logout
+  };
+
+  // Function to protect routes based on user role
+  const ProtectedRoute = ({ role, children, requiredRole }) => {
+    if (role !== requiredRole) {
+      return <Navigate to="/auth/login" replace />;
+    }
+    return children;
+  };
 
   return (
     <Router>
-      <div className="app">
-        <Header />
-        <main className="main-content">
-          <Routes>
-            <Route
-              path="/login"
-              element={<LoginPage setUser={setUser} />}
-            />
-            <Route
-              path="/drivers"
-              element={
-                user && user.role === 'admin' ? (
-                  <DriversPage />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/driver-income"
-              element={
-                user ? (
-                  <DriverIncomePage />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/"
-              element={<Navigate to="/login" />}
-            />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Header userRole={userRole} onLogout={handleLogout} />
+      <Routes>
+        {/* Login Route */}
+        <Route path="/auth/login" element={<Login onLogin={handleLogin} />} />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/AdminDashboard"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/DriverProfile"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="ADMIN">
+              <DriverProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/DriverMonthlyReports"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="ADMIN">
+              <DriverMonthlyReports />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/DriverSalaryReport"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="ADMIN">
+              <DriverSalaryReport />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Driver Routes */}
+        <Route
+          path="/driver/DriverDashboard"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="USER">
+              <DriverDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Default Route */}
+        <Route path="/" element={<h1>Welcome to the Taxi App</h1>} />
+      </Routes>
+      <Footer />
     </Router>
   );
 };

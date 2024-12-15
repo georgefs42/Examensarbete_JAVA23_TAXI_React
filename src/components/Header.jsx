@@ -1,12 +1,20 @@
-import { useState } from 'react';
-import '../css/Header.css'; // Import the CSS file
-
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../css/Header.css'; // Ensure you have a CSS file for styling
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); // For navigation
+  const isAuthenticated = !!localStorage.getItem('authToken'); // Check if token exists
 
-  const toggleMenu = () => {
-    setIsMenuOpen(prevState => !prevState);
+  const handleAuthTextClick = () => {
+    if (isAuthenticated) {
+      // Logout logic
+      localStorage.removeItem('authToken');
+      navigate('/'); // Redirect to homepage after logout
+    } else {
+      // Navigate to login page
+      navigate('/auth/login');
+    }
   };
 
   return (
@@ -14,17 +22,24 @@ const Header = () => {
       <div className="logo">
         Stockholm <span className="highlight">TAXI</span> och Åkeri
       </div>
-      <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
-        <ul className={`nav-list ${isMenuOpen ? 'open' : ''}`}>
-          <li><a href="#booking">Booking</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#about">Work with us</a></li>
-          <li><a href="#about">Login</a></li>
-          
+      <nav className="nav">
+        <ul className="nav-list">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/booking">Booking</Link></li>
+          {isAuthenticated && (
+            <>
+              <li><Link to="/admin/dashboard">Admin Dashboard</Link></li>
+              <li><Link to="/driver/dashboard">Driver Dashboard</Link></li>
+            </>
+          )}
+          {/* Login/Out text */}
+          <li>
+            <span onClick={handleAuthTextClick} className="auth-text">
+              Login/Out
+            </span>
+          </li>
         </ul>
-        <div className="menu-icon" onClick={toggleMenu}>
-          ☰
-        </div>
       </nav>
     </header>
   );
