@@ -1,4 +1,4 @@
-import '../css/Footer.css'
+import '../css/home/footer.css'
 
 const Footer = () => {
   return (
@@ -6,12 +6,10 @@ const Footer = () => {
       <div className="footer-content">
         
         <div className="footer-links">
-          <a href="/hero">Home</a>
-          <a href="/main">About</a>
-          <a href="/main">Work with us</a>
-          <a href="/main">Login/Out</a>
-        
-        
+          <a href="/">Home</a>
+          <a href="/about/About">About</a>
+          <a href="/work/Work">Work with us</a>
+
           <p>&copy; {new Date().getFullYear()} Stockholm Taxi och Åkeri. All rights reserved.</p>
           <p><a href="https://georgedev.se" target="_blank">georgedev.se</a></p>
         </div>

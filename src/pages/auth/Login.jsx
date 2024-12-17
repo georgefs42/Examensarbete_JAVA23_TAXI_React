@@ -8,42 +8,38 @@ const Login = ({ onLogin }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  const credentials = {
-    admin: { username: 'admin', password: '123456', role: 'ADMIN' },
-    taxiCentral: { username: 'central', password: '123456', role: 'TAXI_CENTRAL' },
-    users: [
-      { username: 'driver1', password: '123456', role: 'USER' },
-      { username: 'driver2', password: '123456', role: 'USER' },
-      { username: 'driver3', password: '123456', role: 'USER' },
-    ],
-  };
-
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Taxi Central login
+    // Taxi Central login using environment variables
     if (
-      username === credentials.taxiCentral.username &&
-      password === credentials.taxiCentral.password
+      username === import.meta.env.VITE_TAXI_CENTRAL_USERNAME &&
+      password === import.meta.env.VITE_TAXI_CENTRAL_PASSWORD
     ) {
       onLogin('TAXI_CENTRAL');
       navigate('/taxiCentral/CentralDashboard');
       return;
     }
 
-    // Admin login
+    // Admin login using environment variables
     if (
-      username === credentials.admin.username &&
-      password === credentials.admin.password
+      username === import.meta.env.VITE_ADMIN_USERNAME &&
+      password === import.meta.env.VITE_ADMIN_PASSWORD
     ) {
       onLogin('ADMIN');
       navigate('/admin/AdminDashboard');
       return;
     }
 
-    // Driver login
-    const user = credentials.users.find(
-      (user) => user.username === username && user.password === password
+    // Driver login using environment variables
+    const drivers = [
+      { username: import.meta.env.VITE_DRIVER1_USERNAME, password: import.meta.env.VITE_DRIVER1_PASSWORD },
+      { username: import.meta.env.VITE_DRIVER2_USERNAME, password: import.meta.env.VITE_DRIVER2_PASSWORD },
+      { username: import.meta.env.VITE_DRIVER3_USERNAME, password: import.meta.env.VITE_DRIVER3_PASSWORD },
+    ];
+
+    const user = drivers.find(
+      (driver) => driver.username === username && driver.password === password
     );
 
     if (user) {
