@@ -38,7 +38,7 @@ const Header = () => {
         <ul className={`nav-list ${menuOpen ? 'open' : ''}`}>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
-          <li><Link to="/booking">Booking</Link></li>
+          <li><Link to="/work">Work</Link></li> {/* Added Work link */}
           {isAuthenticated && (
             <>
               <li><Link to="/admin/dashboard">Admin Dashboard</Link></li>

@@ -12,6 +12,8 @@ const BookingForm = () => {
     pickupAddress: '',
     extraAddress: '',
     dropOffAddress: '',
+    date: '', // New state for the booking date
+    time: '', // New state for the booking time
   });
 
   const [distance, setDistance] = useState(null);
@@ -153,6 +155,8 @@ const BookingForm = () => {
       pickupAddress: '',
       extraAddress: '',
       dropOffAddress: '',
+      date: '', // Reset date
+      time: '', // Reset time
     });
     setPickupLatLng(null);
     setDropOffLatLng(null);
@@ -246,6 +250,28 @@ const BookingForm = () => {
                     placeholder="Dropoff address"
                   />
                 </Autocomplete>
+              </div>
+              
+              <div>
+                <label>Date:</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              
+              <div>
+                <label>Time:</label>
+                <input
+                  type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
 
               {distance !== null && (
