@@ -1,0 +1,147 @@
+/* TaxiCentralCenter.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Container styles */
+  .taxi-central-center-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading Style */
+  h2 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Download Button Styles */
+  .download-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .download-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Table Styles */
+  .booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+  }
+  
+  .booking-table th,
+  .booking-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 0.95rem;
+  }
+  
+  .booking-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .booking-table td {
+    background-color: #fff;
+    color: #555;
+  }
+  
+  /* Table Row Hover Effect */
+  .booking-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .taxi-central-center-container {
+      padding: 15px;
+    }
+  
+    .download-btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    .booking-table th,
+    .booking-table td {
+      padding: 10px;
+    }
+  
+    .taxi-central-center-container {
+      padding: 10px;
+    }
+  
+    .download-btn {
+      padding: 10px 15px;
+    }
+  
+    .booking-table {
+      font-size: 0.85rem;
+    }
+  
+    .booking-table th,
+    .booking-table td {
+      word-wrap: break-word;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .taxi-central-center-container {
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.2rem;
+    }
+  
+    .download-btn {
+      width: 100%;
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+  
+    .booking-table {
+      font-size: 0.8rem;
+    }
+  
+    .booking-table th,
+    .booking-table td {
+      padding: 8px;
+    }
+  }
+  
+  

@@ -1,0 +1,203 @@
+/* Global reset for margins, padding, and box sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f7f7f7;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Container for the booking form and map */
+.booking-form-container {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column; /* Default direction for mobile */
+  overflow: hidden;
+}
+
+/* Main content wrapper */
+.booking-form-wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  flex-direction: row; /* Default: row layout for large screens */
+  height: 80vh; /* Adjusted height for more visibility */
+}
+
+/* Left side of the container (form section) */
+.booking-form-left {
+  width: 400px;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow-y: auto;
+}
+
+.booking-form-left h2 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.booking-form-left label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  font-weight: 500;
+  display: block;
+}
+
+.booking-form-left input[type='text'],
+.booking-form-left input[type='email'],
+.booking-form-left input[type='number'] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.booking-form-left input[type='text']:focus,
+.booking-form-left input[type='email']:focus,
+.booking-form-left input[type='number']:focus {
+  border-color: #0066cc;
+  box-shadow: 0 0 8px rgba(0, 102, 204, 0.3);
+  outline: none;
+}
+
+/* Optional extra address input */
+.booking-form-left input[placeholder='Extra address (optional)'] {
+  background-color: #f9f9f9;
+}
+
+/* Button styling */
+.booking-form-left button {
+  width: 100%;
+  padding: 14px;
+  background-color: #0066cc;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.booking-form-left button:hover {
+  background-color: #005bb5;
+}
+
+/* Edit and Save button */
+.booking-form-left button[type='button'] {
+  background-color: #ddd;
+  color: #333;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.booking-form-left button[type='button']:hover {
+  background-color: #ccc;
+}
+
+.booking-form-left h3 {
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.booking-form-left p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* Map Container */
+.booking-form-right {
+  flex: 1;
+  height: 100%; /* Adjust height for the map */
+  position: relative;
+  border-left: 2px solid #f1f1f1;
+}
+
+.booking-form-right .google-map {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Mobile Responsive Layout */
+@media (max-width: 768px) {
+  .booking-form-wrapper {
+    flex-direction: column; /* Stack form and map vertically */
+    height: auto;
+  }
+
+  .booking-form-left {
+    width: 100%;
+    padding: 20px;
+    max-height: 450px; /* Adjust height for smaller screens */
+    overflow-y: auto;
+  }
+
+  .booking-form-right {
+    width: 100%;
+    height: 350px; /* Make the map slightly shorter for smaller screens */
+    margin-top: 20px; /* Adds some space between the form and the map */
+  }
+
+  .booking-form-left h2 {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 15px;
+  }
+
+  .booking-form-left button {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .booking-form-left input[type='text'],
+  .booking-form-left input[type='email'],
+  .booking-form-left input[type='number'] {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+}
+
+/* Animation for fading in the form */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.booking-form-left,
+.booking-form-right {
+  animation: fadeIn 0.5s ease-in-out;
+}
