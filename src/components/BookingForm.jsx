@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GoogleMap, LoadScript, Marker, DirectionsRenderer, Autocomplete } from '@react-google-maps/api';
 import '../css/home/BookingForm.css';
 
-const googleMapsApiKey = 'AIzaSyBwCKoA7Kag_0I3R7zh26vYasIRh70LM34';
+// Access the API key from the environment variables using import.meta.env
+const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -215,7 +216,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Pickup Address:</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('pickup', formData.pickupAddress)}>
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('pickup', formData.pickupAddress)} >
                   <input
                     type="text"
                     name="pickupAddress"
@@ -228,7 +229,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Extra Address (Optional):</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('extra', formData.extraAddress)}>
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('extra', formData.extraAddress)} >
                   <input
                     type="text"
                     name="extraAddress"
@@ -240,7 +241,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Dropoff Address:</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('dropoff', formData.dropOffAddress)}>
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('dropoff', formData.dropOffAddress)} >
                   <input
                     type="text"
                     name="dropOffAddress"

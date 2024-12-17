@@ -10,6 +10,7 @@ const Login = ({ onLogin }) => {
 
   const credentials = {
     admin: { username: 'admin', password: '123456', role: 'ADMIN' },
+    taxiCentral: { username: 'central', password: '123456', role: 'TAXI_CENTRAL' },
     users: [
       { username: 'driver1', password: '123456', role: 'USER' },
       { username: 'driver2', password: '123456', role: 'USER' },
@@ -19,6 +20,16 @@ const Login = ({ onLogin }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+
+    // Taxi Central login
+    if (
+      username === credentials.taxiCentral.username &&
+      password === credentials.taxiCentral.password
+    ) {
+      onLogin('TAXI_CENTRAL');
+      navigate('/taxiCentral/CentralDashboard');
+      return;
+    }
 
     // Admin login
     if (

@@ -9,9 +9,10 @@ import DriverSalaryReport from './pages/admin/DriverSalaryReport'; // Import Dri
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BookingForm from './components/BookingForm'; // Import BookingForm component
+import CentralDashboard from './pages/taxiCentral/CentralDashboard'; // Import CentralDashboard
 
 const App = () => {
-  const [userRole, setUserRole] = useState(null); // State to track user role ('ADMIN' or 'USER')
+  const [userRole, setUserRole] = useState(null); // State to track user role ('ADMIN', 'USER', 'TAXI_CENTRAL')
 
   const handleLogin = (role) => {
     setUserRole(role); // Set user role on login
@@ -76,6 +77,16 @@ const App = () => {
           element={
             <ProtectedRoute role={userRole} requiredRole="USER">
               <DriverDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Taxi Central Route */}
+        <Route
+          path="/taxiCentral/CentralDashboard"
+          element={
+            <ProtectedRoute role={userRole} requiredRole="TAXI_CENTRAL">
+              <CentralDashboard />
             </ProtectedRoute>
           }
         />
