@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { jsPDF } from "jspdf";  // Import jsPDF
+import { useNavigate } from "react-router-dom";  // Import useNavigate from react-router-dom
 import '../../css/admin/salaryReport.css';
 
 const DriverSalaryReport = () => {
@@ -13,6 +14,12 @@ const DriverSalaryReport = () => {
   });
   const [editingReport, setEditingReport] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  // Ref for the form container to scroll into view
+  const formRef = useRef(null);
+
+  // Initialize useNavigate hook for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch all salary reports on component mount
@@ -89,6 +96,11 @@ const DriverSalaryReport = () => {
       year: report.periodFrom.year,
       tax: report.tax,
     });
+
+    // Scroll to the form section when editing
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   // Handle deleting a salary report
@@ -145,54 +157,66 @@ const DriverSalaryReport = () => {
     doc.save(`Salary_Report_${report.driverId}_${report.periodFrom.month}_${report.periodFrom.year}.pdf`);
   };
 
+  // Finish button handler to navigate to the admin dashboard
+  const handleFinish = () => {
+    navigate('/admin/adminDashboard'); // Navigates to the admin dashboard
+  };
+
   return (
     <div>
       <h1>Driver Salary Reports</h1>
 
-      <form onSubmit={handleSubmit}>
-        <h2>{editingReport ? "Edit" : "Create"} Salary Report</h2>
-        {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+      <div ref={formRef}> {/* Reference to the form container */}
+        <form onSubmit={handleSubmit}>
+          <h2>{editingReport ? "Edit" : "Create"} Salary Report</h2>
+          {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
 
-        <label>Driver ID:</label>
-        <input
-          type="number"
-          name="driverId"
-          value={formData.driverId}
-          onChange={handleChange}
-        />
-        <br />
+          <label>Driver ID:</label>
+          <input
+            type="number"
+            name="driverId"
+            value={formData.driverId}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label>Month (1-12):</label>
-        <input
-          type="number"
-          name="month"
-          min="1"
-          max="12"
-          value={formData.month}
-          onChange={handleChange}
-        />
-        <br />
+          <label>Month (1-12):</label>
+          <input
+            type="number"
+            name="month"
+            min="1"
+            max="12"
+            value={formData.month}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label>Year:</label>
-        <input
-          type="number"
-          name="year"
-          value={formData.year}
-          onChange={handleChange}
-        />
-        <br />
+          <label>Year:</label>
+          <input
+            type="number"
+            name="year"
+            value={formData.year}
+            onChange={handleChange}
+          />
+          <br />
 
-        <label>Tax:</label>
-        <input
-          type="number"
-          name="tax"
-          value={formData.tax}
-          onChange={handleChange}
-        />
-        <br />
+          <label>Tax:</label>
+          <input
+            type="number"
+            name="tax"
+            value={formData.tax}
+            onChange={handleChange}
+          />
+          <br />
 
-        <button type="submit">{editingReport ? "Update" : "Create"}</button>
-      </form>
+          <button type="submit">{editingReport ? "Update" : "Create"}</button>
+        </form>
+      </div>
+
+      {/* Finish button */}
+      <button onClick={handleFinish} className="finish-button">
+        Finish
+      </button>
 
       <h2>Salary Reports</h2>
       <table>
