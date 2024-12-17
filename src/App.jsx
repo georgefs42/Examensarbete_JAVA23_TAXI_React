@@ -8,6 +8,7 @@ import DriverMonthlyReports from './pages/admin/DriverMonthlyReports'; // Import
 import DriverSalaryReport from './pages/admin/DriverSalaryReport'; // Import DriverSalaryReport
 import Header from './components/Header';
 import Footer from './components/Footer';
+import BookingForm from './components/BookingForm'; // Import BookingForm component
 
 const App = () => {
   const [userRole, setUserRole] = useState(null); // State to track user role ('ADMIN' or 'USER')
@@ -79,8 +80,8 @@ const App = () => {
           }
         />
 
-        {/* Default Route */}
-        <Route path="/" element={<h1>Welcome to the Taxi App</h1>} />
+        {/* Homepage Route (BookingForm) */}
+        <Route path="/" element={<BookingForm />} />
       </Routes>
       <Footer />
     </Router>
