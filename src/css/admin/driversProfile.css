@@ -1,0 +1,272 @@
+/* General container styling */
+.drivers-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+h3 {
+  color: #007BFF;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* Form Section Styling */
+.add-driver-section, .edit-driver-section {
+  width: 100%;
+  max-width: 600px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.driver-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-form input {
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.driver-form input:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.driver-form button {
+  padding: 12px;
+  font-size: 1.1rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.driver-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Image Preview Styling */
+.photo-preview-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.photo-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+.photo-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+}
+
+/* Drivers List Section */
+.drivers-list {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.drivers-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.drivers-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.drivers-list li:last-child {
+  border-bottom: none;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+button:active {
+  background-color: #1e7e34;
+}
+
+/* Confirmation Modal */
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-modal.active {
+  display: flex;
+}
+
+.confirmation-modal .modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 400px;
+}
+
+.confirmation-modal .modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.confirmation-modal .modal-content .confirm-btn {
+  background-color: #007BFF;
+}
+
+.confirmation-modal .modal-content .cancel-btn {
+  background-color: #dc3545;
+}
+
+/* Scroll to Top Button */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 16%;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.7; /* Add transparency */
+}
+
+.scroll-to-top-btn:hover {
+  background-color: #0056b3;
+  opacity: 1; /* Make the button fully visible on hover */
+}
+
+/* Finish Button Styling (Updated) */
+.finish-btn {
+  position: fixed;  /* Fixed position for the button */
+  top: 15%;  /* Distance from the top of the screen */
+  right: 16%;  /* Distance from the right edge */
+  background-color: #dc3545;  /* Red background */
+  color: white;  /* White text */
+  padding: 10px 20px;  /* Padding for the button */
+  border: none;  /* No border */
+  border-radius: 5px;  /* Rounded corners */
+  font-size: 1.1rem;  /* Larger font size */
+  cursor: pointer;  /* Pointer cursor on hover */
+  z-index: 1000;  /* Ensure the button is above other elements */
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transition for background color and scaling */
+}
+
+.finish-btn:hover {
+  background-color: #c82333;  /* Darker red on hover */
+  transform: scale(1.05);  /* Slight zoom effect */
+}
+
+.finish-btn:active {
+  background-color: #bd2130;  /* Even darker red when clicked */
+  transform: scale(1);  /* Reset scale when clicked */
+}
+
+/* Responsive Adjustments for Small Screens */
+@media (max-width: 600px) {
+  /* Stack the form and image on smaller screens */
+  .add-driver-section, .edit-driver-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .photo-preview-img {
+    width: 100%;
+    max-width: 250px; /* Make the image smaller */
+    margin-bottom: 20px;
+  }
+
+  /* Adjust layout for driver list and buttons */
+  .drivers-list {
+    padding: 20px;
+  }
+
+  .drivers-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .drivers-list button {
+    margin-top: 10px;
+  }
+
+  /* Adjust Finish Button on smaller screens */
+  .finish-btn {
+    top: 10%;  /* Move the button slightly lower on small screens */
+    right: 10%;  /* Adjust right margin for small screens */
+    font-size: 14px;  /* Smaller font size */
+    padding: 8px 16px;  /* Adjust padding */
+  }
+}
+
+/* Extra Small Screens (mobile) */
+@media (max-width: 400px) {
+  .finish-btn {
+    top: 20%;  /* Move button slightly further down */
+    right: 6%;  /* Reduce right margin */
+    font-size: 13px;  /* Further reduce font size */
+    padding: 6px 12px;  /* Adjust padding for small screens */
+  }
+}

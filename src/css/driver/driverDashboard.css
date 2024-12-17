@@ -1,0 +1,316 @@
+/* General Layout */
+.driver-income-container {
+  max-width: 1200px;
+  margin: 3% auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 2rem;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #34495e;
+  margin-bottom: 15px;
+}
+
+.welcome-message h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4CAF50;
+  text-align: center;
+  animation: typing 3s steps(30) 1s forwards, fadeIn 3s ease-in forwards; /* Adjusted for 3s duration */
+  margin-bottom: 20px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Form Styling */
+.income-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.income-form label {
+  display: block;
+  font-size: 1rem;
+  color: #7f8c8d;
+  margin-bottom: 5px;
+}
+
+.income-form input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #ecf0f1;
+}
+
+.income-form input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.income-form button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.income-form button:hover {
+  background-color: #2980b9;
+}
+
+/* Calculated Income Section */
+.calculated-income {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.calculated-income p {
+  font-size: 1.1rem;
+  color: #34495e;
+  margin-bottom: 10px;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button-container button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button-container button:hover {
+  background-color: #2ecc71;
+}
+
+/* Status Message Styling */
+.status-message {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.status-message.success {
+  background-color: #27ae60;
+  color: white;
+}
+
+.status-message.error {
+  background-color: #e74c3c;
+  color: white;
+}
+
+/* Report Section */
+.report-section {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.report-section input {
+  width: 48%;
+  padding: 12px;
+  margin-right: 4%;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ecf0f1;
+}
+
+.report-section input:last-child {
+  margin-right: 0;
+}
+
+.report-section button {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.report-section button:hover {
+  background-color: #e67e22;
+}
+
+/* Driver Report List */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 1.1rem;
+  color: #34495e;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+
+/* Media Queries for Responsiveness */
+
+/* Mobile Devices */
+@media (max-width: 576px) {
+  .income-form input,
+  .report-section input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .report-section input {
+    margin-bottom: 10px;
+  }
+
+  .income-form button,
+  .submit-button-container button,
+  .report-section button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .submit-button-container button {
+    padding: 10px 15px; /* Adjust padding for small screens */
+  }
+
+  .driver-income-container {
+    padding: 15px; /* Less padding on smaller screens */
+  }
+}
+
+/* Tablets and Small Desktops */
+@media (max-width: 768px) {
+  .income-form input,
+  .report-section input {
+    width: 48%;
+    margin-right: 4%;
+  }
+
+  .report-section input:last-child {
+    margin-right: 0;
+  }
+
+  .income-form button,
+  .submit-button-container button,
+  .report-section button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.8rem; /* Slightly smaller header for better readability on tablets */
+  }
+
+  .submit-button-container button {
+    padding: 12px 20px; /* Adjust padding for tablets */
+  }
+}
+
+/* Larger Screens */
+@media (min-width: 992px) {
+  .driver-income-container {
+    padding: 40px;
+  }
+
+  .income-form input,
+  .report-section input {
+    width: 45%;
+  }
+
+  .income-form button,
+  .submit-button-container button,
+  .report-section button {
+    font-size: 1.1rem;
+  }
+
+  h2 {
+    font-size: 2.2rem; /* Larger header for desktop */
+  }
+
+  .submit-button-container button {
+    padding: 14px 30px; /* Increase padding for better button size on larger screens */
+  }
+}
+
+/* Extra Large Screens (for large desktop screens) */
+@media (min-width: 1200px) {
+  .driver-income-container {
+    padding: 50px;
+    margin: 5% auto;
+  }
+
+  .income-form input,
+  .report-section input {
+    width: 40%;
+  }
+
+  .income-form button,
+  .submit-button-container button,
+  .report-section button {
+    font-size: 1.2rem;
+  }
+}
+.welcome-message h2 {
+  font-size: 1rem;
+}

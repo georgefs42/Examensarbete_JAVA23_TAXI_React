@@ -1,0 +1,279 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.driver-monthly-report {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #2b2b2b;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #4d90fe;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Form Styles */
+section {
+    margin-bottom: 30px;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    font-size: 1rem;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: #4d90fe;
+    box-shadow: 0 0 5px rgba(77, 144, 254, 0.5);
+}
+
+button {
+    background-color: #4d90fe;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #3578e5;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+}
+
+/* Finish Button (top-right corner) */
+.finish-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(244, 67, 54, 0.7); /* Transparent red background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.finish-button:hover {
+    background-color: rgba(211, 47, 47, 0.9); /* Slightly darker transparent red */
+}
+
+.finish-button:active {
+    background-color: rgba(211, 47, 47, 1); /* Fully opaque red when active */
+}
+
+/* Scroll to Top Button */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: rgba(77, 144, 254, 0.7); /* Transparent blue background */
+    color: white;
+    font-size: 2rem;
+    padding: 10px 15px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none; /* Hidden by default */
+}
+
+.scroll-top.show {
+    display: block; /* Show when scrolled down */
+}
+
+.scroll-top:hover {
+    background-color: rgba(53, 120, 229, 0.9); /* Slightly darker transparent blue */
+}
+
+.scroll-top:active {
+    background-color: rgba(53, 120, 229, 1); /* Fully opaque blue when active */
+}
+
+/* Message Styles */
+.message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-left: 5px solid #4d90fe;
+    color: #333;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.message.success {
+    border-color: #4CAF50;
+    background-color: #e8f5e9;
+}
+
+.message.error {
+    border-color: #f44336;
+    background-color: #ffebee;
+}
+
+/* Report List Styles */
+.report {
+    background-color: #f8f9fb;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.report p {
+    font-size: 1rem;
+    color: #333;
+    margin: 5px 0;
+}
+
+.report p strong {
+    font-weight: bold;
+}
+
+.report button {
+    background-color: #f44336;
+    color: #fff;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.report button:hover {
+    background-color: #d32f2f;
+}
+
+.report button:active {
+    transform: translateY(1px);
+}
+
+/* No Report Available */
+p {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .driver-monthly-report {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-field input {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 10px 15px;
+    }
+
+    .report {
+        padding: 10px;
+    }
+
+    .report button {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+
+    /* Adjust Finish Button for iPhone */
+    .finish-button {
+        top: 10px;
+        right: 10px;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    /* Adjust Scroll to Top button for iPhone */
+    .scroll-top {
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.8rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further adjustments for smaller iPhones */
+    .finish-button {
+        top: 5px;
+        right: 5px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+
+    .scroll-top {
+        bottom: 15px;
+        right: 15px;
+        font-size: 1.6rem;
+        padding: 7px 10px;
+    }
+}
