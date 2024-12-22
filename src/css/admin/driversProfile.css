@@ -1,4 +1,4 @@
-/* General container styling */
+/* General Container Styling */
 .drivers-page {
   display: flex;
   flex-direction: column;
@@ -7,6 +7,7 @@
   font-family: 'Arial', sans-serif;
 }
 
+/* Main Heading */
 h2 {
   text-align: center;
   color: #333;
@@ -14,6 +15,7 @@ h2 {
   font-size: 2.5rem;
 }
 
+/* Subheading */
 h3 {
   color: #007BFF;
   margin-bottom: 20px;
@@ -179,8 +181,8 @@ button:active {
 /* Scroll to Top Button */
 .scroll-to-top-btn {
   position: fixed;
-  bottom: 20px;
-  right: 16%;
+  bottom: 30px;
+  right: 15%;
   padding: 10px 20px;
   background-color: #dc3545;
   color: white;
@@ -189,43 +191,42 @@ button:active {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease, opacity 0.3s ease;
-  opacity: 0.7; /* Add transparency */
+  opacity: 0.7;
 }
 
 .scroll-to-top-btn:hover {
-  background-color: #0056b3;
-  opacity: 1; /* Make the button fully visible on hover */
+  opacity: 1;
 }
 
-/* Finish Button Styling (Updated) */
+/* Finish Button Styling */
 .finish-btn {
-  position: fixed;  /* Fixed position for the button */
-  top: 15%;  /* Distance from the top of the screen */
-  right: 16%;  /* Distance from the right edge */
-  background-color: #dc3545;  /* Red background */
-  color: white;  /* White text */
-  padding: 10px 20px;  /* Padding for the button */
-  border: none;  /* No border */
-  border-radius: 5px;  /* Rounded corners */
-  font-size: 1.1rem;  /* Larger font size */
-  cursor: pointer;  /* Pointer cursor on hover */
-  z-index: 1000;  /* Ensure the button is above other elements */
-  transition: background-color 0.3s ease, transform 0.2s ease;  /* Smooth transition for background color and scaling */
+  position: fixed;
+  top: 15%;
+  right: 16%;
+  background-color: #dc3545;
+  opacity: 0.7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .finish-btn:hover {
-  background-color: #c82333;  /* Darker red on hover */
-  transform: scale(1.05);  /* Slight zoom effect */
+  background-color: #c82333;
+  transform: scale(1.05);
 }
 
 .finish-btn:active {
-  background-color: #bd2130;  /* Even darker red when clicked */
-  transform: scale(1);  /* Reset scale when clicked */
+  background-color: #bd2130;
+  transform: scale(1);
 }
 
 /* Responsive Adjustments for Small Screens */
 @media (max-width: 600px) {
-  /* Stack the form and image on smaller screens */
   .add-driver-section, .edit-driver-section {
     display: flex;
     flex-direction: column;
@@ -234,11 +235,10 @@ button:active {
 
   .photo-preview-img {
     width: 100%;
-    max-width: 250px; /* Make the image smaller */
+    max-width: 250px;
     margin-bottom: 20px;
   }
 
-  /* Adjust layout for driver list and buttons */
   .drivers-list {
     padding: 20px;
   }
@@ -252,21 +252,20 @@ button:active {
     margin-top: 10px;
   }
 
-  /* Adjust Finish Button on smaller screens */
   .finish-btn {
-    top: 10%;  /* Move the button slightly lower on small screens */
-    right: 10%;  /* Adjust right margin for small screens */
-    font-size: 14px;  /* Smaller font size */
-    padding: 8px 16px;  /* Adjust padding */
+    top: 10%;
+    right: 10%;
+    font-size: 14px;
+    padding: 8px 16px;
   }
 }
 
 /* Extra Small Screens (mobile) */
 @media (max-width: 400px) {
   .finish-btn {
-    top: 20%;  /* Move button slightly further down */
-    right: 6%;  /* Reduce right margin */
-    font-size: 13px;  /* Further reduce font size */
-    padding: 6px 12px;  /* Adjust padding for small screens */
+    top: 20%;
+    right: 6%;
+    font-size: 13px;
+    padding: 6px 12px;
   }
 }

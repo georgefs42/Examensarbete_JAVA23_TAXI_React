@@ -26,7 +26,7 @@ h3 {
   font-weight: bold;
   color: #4CAF50;
   text-align: center;
-  animation: typing 3s steps(30) 1s forwards, fadeIn 3s ease-in forwards; /* Adjusted for 3s duration */
+  animation: typing 3s steps(30) 1s forwards, fadeIn 3s ease-in forwards;
   margin-bottom: 20px;
 }
 
@@ -231,11 +231,11 @@ ul li:last-child {
   }
 
   .submit-button-container button {
-    padding: 10px 15px; /* Adjust padding for small screens */
+    padding: 10px 15px;
   }
 
   .driver-income-container {
-    padding: 15px; /* Less padding on smaller screens */
+    padding: 15px;
   }
 }
 
@@ -259,11 +259,11 @@ ul li:last-child {
   }
 
   h2 {
-    font-size: 1.8rem; /* Slightly smaller header for better readability on tablets */
+    font-size: 1.8rem;
   }
 
   .submit-button-container button {
-    padding: 12px 20px; /* Adjust padding for tablets */
+    padding: 12px 20px;
   }
 }
 
@@ -285,11 +285,11 @@ ul li:last-child {
   }
 
   h2 {
-    font-size: 2.2rem; /* Larger header for desktop */
+    font-size: 2.2rem;
   }
 
   .submit-button-container button {
-    padding: 14px 30px; /* Increase padding for better button size on larger screens */
+    padding: 14px 30px;
   }
 }
 

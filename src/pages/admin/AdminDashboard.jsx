@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
+import { useNavigate } from 'react-router-dom'; 
 import '../../css/admin/AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -14,7 +14,7 @@ const AdminDashboard = () => {
     'Calculate Tax' // New option
   ];
 
-  const navigate = useNavigate(); // Initialize useNavigate for programmatic navigation
+  const navigate = useNavigate(); 
 
   // Animate Welcome Admin text
   useEffect(() => {
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
         setText((prev) => prev + welcomeText[currentIndex]);
         setCurrentIndex((prev) => prev + 1);
       }, 150);
-      return () => clearTimeout(timer); // Cleanup timer on each render
+      return () => clearTimeout(timer); 
     }
   }, [currentIndex]);
 
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
         navigate('/admin/DriverSalaryReport');
         break;
       case 'Calculate Tax':
-        window.open('https://www7.skatteverket.se/portal/inkomst-efter-skatt-se-tabell?pk_vid=e15bfca2df83e8141734294052c71015', '_blank'); // Open in new tab
+        window.open('https://www7.skatteverket.se/portal/inkomst-efter-skatt-se-tabell?pk_vid=e15bfca2df83e8141734294052c71015', '_blank'); 
         break;
       default:
         break;

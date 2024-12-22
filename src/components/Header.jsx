@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../css/Header.css'; // Ensure you have a CSS file for styling
+import '../css/home/header.css'; // Ensure you have a CSS file for styling
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false); // State to toggle menu visibility

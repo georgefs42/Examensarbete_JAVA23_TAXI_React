@@ -20,7 +20,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  flex-direction: column; /* Default direction for mobile */
+  flex-direction: column;
   overflow: hidden;
 }
 
@@ -33,8 +33,8 @@ body {
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  flex-direction: row; /* Default: row layout for large screens */
-  height: 80vh; /* Adjusted height for more visibility */
+  flex-direction: row;
+  height: 80vh;
 }
 
 /* Left side of the container (form section) */
@@ -136,7 +136,7 @@ body {
 /* Map Container */
 .booking-form-right {
   flex: 1;
-  height: 100%; /* Adjust height for the map */
+  height: 100%;
   position: relative;
   border-left: 2px solid #f1f1f1;
 }
@@ -148,56 +148,22 @@ body {
   overflow: hidden;
 }
 
-/* Mobile Responsive Layout */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
   .booking-form-wrapper {
-    flex-direction: column; /* Stack form and map vertically */
-    height: auto;
+    flex-direction: column;
   }
 
-  .booking-form-left {
+  .booking-form-left,
+  .booking-form-right {
     width: 100%;
-    padding: 20px;
-    max-height: 450px; /* Adjust height for smaller screens */
-    overflow-y: auto;
   }
 
   .booking-form-right {
-    width: 100%;
-    height: 350px; /* Make the map slightly shorter for smaller screens */
-    margin-top: 20px; /* Adds some space between the form and the map */
-  }
-
-  .booking-form-left h2 {
-    font-size: 20px;
-    text-align: left;
-    margin-bottom: 15px;
+    height: 300px;
   }
 
   .booking-form-left button {
-    font-size: 14px;
-    padding: 12px;
+    width: auto;
   }
-
-  .booking-form-left input[type='text'],
-  .booking-form-left input[type='email'],
-  .booking-form-left input[type='number'] {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
-}
-
-/* Animation for fading in the form */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.booking-form-left,
-.booking-form-right {
-  animation: fadeIn 0.5s ease-in-out;
 }
