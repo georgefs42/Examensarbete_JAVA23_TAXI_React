@@ -1,0 +1,81 @@
+/* General container styling for the About section */
+.about-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Animated title styling */
+.animated-title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #007BFF;
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 2s ease-out forwards, typing 3s steps(30) 1s forwards;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+/* Fade-in animation for the title */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Typing effect animation */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Styling for paragraph text */
+.about-section p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  text-align: justify;
+  text-justify: inter-word;
+  color: #555;
+}
+
+/* Optional: Add hover effect for a subtle interaction */
+.about-section:hover {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+}
+
+/* Additional styling for mobile responsiveness */
+@media (max-width: 768px) {
+  .animated-title {
+    font-size: 2rem;
+  }
+
+  .about-section {
+    padding: 20px;
+  }
+
+  .about-section p {
+    font-size: 1rem;
+  }
+}

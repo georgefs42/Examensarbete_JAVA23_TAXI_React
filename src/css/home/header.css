@@ -1,0 +1,139 @@
+/* Header Styling */
+.header {
+  margin: 0 4%;
+  margin-bottom: 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background-color: rgb(245, 235, 218); 
+  color: black;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo Styling */
+.logo {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding-left: 3%;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.highlight {
+  background-color: orange;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-weight: bold;
+  color: white;
+}
+
+/* Navigation Styling */
+.nav {
+  padding-right: 5%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;  
+  position: relative;
+}
+
+.nav-list li {
+  margin-left: 1rem;
+}
+
+.nav-list a {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: black;
+  text-decoration: none;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.nav-list a:hover {
+  color: blueviolet;
+  font-size: 1.5rem;
+}
+
+/* Auth Text Styling */
+.auth-text {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: #007BFF;
+  font-size: 1.4rem; 
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.auth-text:hover {
+  color: #0056b3;
+}
+
+/* Responsive Menu Icon */
+.menu-icon {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: black;
+  background: none;
+  border: none;
+}
+/* Responsive Styles */
+@media (max-width: 750px) {
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 4rem;
+    right: 1rem;
+    background-color: rgba(64, 59, 52, 0.435); 
+    opacity: 0.7;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 200px;
+    z-index: 9999; 
+  }
+
+  .nav-list.open {
+    display: flex;
+  }
+
+  .nav-list li {
+    margin: 0.5rem 0;
+  }
+
+  .menu-icon {
+    display: block;  /* Show menu icon on small screens */
+  }
+}
+
+@media (min-width: 751px) {
+  .menu-icon {
+    display: none;  /* Hide menu icon on larger screens */
+  }
+}
+
+.auth-text {
+  font-size: 1.2rem;  
+}
+
+/* Adjustments for very small screens (portrait iPhone) */
+@media (max-width: 500px) {
+  .auth-text {
+    font-size: 1rem;  
+  }
+
+  .logo {
+    font-size: 1.1rem;  
+  }
+
+  .nav-list a {
+    font-size: 1.2rem;  
+  }
+}
