@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { jsPDF } from "jspdf";  // Import jsPDF
-import { useNavigate } from "react-router-dom";  // Import useNavigate from react-router-dom
+import { jsPDF } from "jspdf";
+import { useNavigate } from "react-router-dom";
 import '../../css/admin/salaryReport.css';
 
 const DriverSalaryReport = () => {
@@ -15,18 +15,13 @@ const DriverSalaryReport = () => {
   const [editingReport, setEditingReport] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Ref for the form container to scroll into view
   const formRef = useRef(null);
-
-  // Initialize useNavigate hook for navigation
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch all salary reports on component mount
     fetchSalaryReports();
   }, []);
 
-  // Fetch salary reports from the backend
   const fetchSalaryReports = async () => {
     try {
       const response = await axios.get("http://localhost:8080/salary-report");
@@ -36,58 +31,51 @@ const DriverSalaryReport = () => {
     }
   };
 
-  // Handle form data change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission for creating or updating a salary report
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { driverId, month, year, tax } = formData;
 
-    // Validate the form data
     if (!driverId || !month || !year || !tax) {
       setErrorMessage("Please fill in all fields.");
       return;
     }
 
-    // Calculate periodFrom and periodTo dates
-    const periodFrom = new Date(year, month - 1, 1); // First day of the month
-    const periodTo = new Date(year, month, 0); // Last day of the month
+    const periodFrom = new Date(year, month - 1, 1);
+    const periodTo = new Date(year, month, 0);
 
     const payload = {
       driverId,
       month,
       year,
-      tax: parseFloat(tax), // Ensure tax is a number
-      periodFrom: periodFrom.toISOString().split('T')[0], // Format as yyyy-mm-dd
-      periodTo: periodTo.toISOString().split('T')[0], // Format as yyyy-mm-dd
+      tax: parseFloat(tax),
+      periodFrom: periodFrom.toISOString().split('T')[0],
+      periodTo: periodTo.toISOString().split('T')[0],
     };
 
     try {
       if (editingReport) {
-        // Update existing salary report
         await axios.put(
           `http://localhost:8080/salary-report/${editingReport.id}`,
           payload
         );
-        setEditingReport(null); // Reset editing state
+        setEditingReport(null);
       } else {
-        // Create a new salary report
         await axios.post("http://localhost:8080/salary-report", payload);
       }
       setErrorMessage("");
-      fetchSalaryReports(); // Refresh salary reports list
-      setFormData({ driverId: "", month: "", year: "", tax: "" }); // Reset form
+      fetchSalaryReports();
+      setFormData({ driverId: "", month: "", year: "", tax: "" });
     } catch (error) {
       setErrorMessage("Error submitting the form.");
     }
   };
 
-  // Handle editing a salary report
   const handleEdit = (report) => {
     setEditingReport(report);
     setFormData({
@@ -97,23 +85,20 @@ const DriverSalaryReport = () => {
       tax: report.tax,
     });
 
-    // Scroll to the form section when editing
     if (formRef.current) {
       formRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
-  // Handle deleting a salary report
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/salary-report/${id}`);
-      fetchSalaryReports(); // Refresh salary reports list
+      fetchSalaryReports();
     } catch (error) {
       setErrorMessage("Error deleting the salary report.");
     }
   };
 
-  // Generate and download PDF
   const downloadPDF = (report) => {
     const doc = new jsPDF();
     const date = new Date().toLocaleDateString();
@@ -125,7 +110,7 @@ const DriverSalaryReport = () => {
     // Company info on the top left
     doc.setFontSize(12);
     doc.text('Stockholm Taxi och Åkeri', 20, 40);
-    doc.text('Org.Number: 790804-1515', 20, 50);
+    doc.text('Org.Number: 790804-0000', 20, 50);
     doc.text('Address: Drottning Kristinas väg 115, 761 42 Norrtälje', 20, 60);
     doc.text('Mobil: 070 - 290 33 83', 20, 70);
 
@@ -141,7 +126,13 @@ const DriverSalaryReport = () => {
     doc.text(`Driver Name: ${report.name}`, 20, 90);
     doc.text(`Driver ID: ${report.driverId}`, 20, 100);
     doc.text(`Driver Personal Number: ${report.personalNumber}`, 20, 110);
-    doc.text(`Month and Year: ${report.periodFrom.month} ${report.periodFrom.year}`, 20, 120);
+
+    // Correctly extracting month and year
+    const periodFrom = new Date(report.periodFrom);  // Assuming periodFrom is a date string
+    const month = periodFrom.toLocaleString('default', { month: 'long' });  // Get full month name
+    const year = periodFrom.getFullYear();  // Get the full year
+
+    doc.text(`Month and Year: ${month} ${year}`, 20, 120);
 
     // Salary details
     doc.setFontSize(12);
@@ -154,19 +145,18 @@ const DriverSalaryReport = () => {
     doc.text(`Netto Salary: ${report.salaryAfterTax} SEK`, 20, 150);
 
     // Save the PDF
-    doc.save(`Salary_Report_${report.driverId}_${report.periodFrom.month}_${report.periodFrom.year}.pdf`);
+    doc.save(`Salary_Report_${report.driverId}_${month}_${year}.pdf`);
   };
 
-  // Finish button handler to navigate to the admin dashboard
   const handleFinish = () => {
-    navigate('/admin/adminDashboard'); // Navigates to the admin dashboard
+    navigate('/admin/adminDashboard');
   };
 
   return (
     <div>
       <h1>Driver Salary Reports</h1>
 
-      <div ref={formRef}> {/* Reference to the form container */}
+      <div ref={formRef}>
         <form onSubmit={handleSubmit}>
           <h2>{editingReport ? "Edit" : "Create"} Salary Report</h2>
           {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
@@ -213,7 +203,6 @@ const DriverSalaryReport = () => {
         </form>
       </div>
 
-      {/* Finish button */}
       <button onClick={handleFinish} className="finish-button">
         Finish
       </button>
@@ -243,7 +232,6 @@ const DriverSalaryReport = () => {
               <td>
                 <button onClick={() => handleEdit(report)}>Edit</button>
                 <button onClick={() => handleDelete(report.id)}>Delete</button>
-                {/* Download PDF button */}
                 <button onClick={() => downloadPDF(report)}>Download PDF</button>
               </td>
             </tr>

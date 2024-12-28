@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { GoogleMap, LoadScript, Marker, DirectionsRenderer, Autocomplete } from '@react-google-maps/api';
 import '../css/home/BookingForm.css';
 
-// Access the API key from the environment variables using import.meta.env
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const BookingForm = () => {
@@ -13,8 +12,8 @@ const BookingForm = () => {
     pickupAddress: '',
     extraAddress: '',
     dropOffAddress: '',
-    date: '', // New state for the booking date
-    time: '', // New state for the booking time
+    date: '',
+    time: '',
   });
 
   const [distance, setDistance] = useState(null);
@@ -27,8 +26,8 @@ const BookingForm = () => {
   const [extraAddressLatLng, setExtraAddressLatLng] = useState(null);
 
   const [mapCenter, setMapCenter] = useState({
-    lat: 59.3293, // Stockholm's latitude
-    lng: 18.0686, // Stockholm's longitude
+    lat: 59.3293, 
+    lng: 18.0686, 
   });
 
   const [bookingStatus, setBookingStatus] = useState(null);
@@ -36,10 +35,10 @@ const BookingForm = () => {
   const formRef = useRef(null);
 
   const calculatePrice = (distanceKm, durationMin) => {
-    const baseFee = 68; // SEK
-    const costPerKm = 20; // SEK per km
-    const costPerHour = 775; // SEK per hour
-    const bookingFee = 50; // SEK
+    const baseFee = 68; 
+    const costPerKm = 20; 
+    const costPerHour = 775; 
+    const bookingFee = 50;
 
     const distanceCost = distanceKm * costPerKm;
     const durationCost = (durationMin / 60) * costPerHour;
@@ -60,8 +59,8 @@ const BookingForm = () => {
       directionsService.route(request, (result, status) => {
         if (status === 'OK') {
           setDirections(result);
-          const distanceKm = result.routes[0].legs[0].distance.value / 1000; // in km
-          const durationMin = result.routes[0].legs[0].duration.value / 60; // in minutes
+          const distanceKm = result.routes[0].legs[0].distance.value / 1000;
+          const durationMin = result.routes[0].legs[0].duration.value / 60;
           setDistance(distanceKm);
           setDuration(durationMin);
           setPrice(calculatePrice(distanceKm, durationMin));
@@ -82,7 +81,7 @@ const BookingForm = () => {
   const handleAutocomplete = (type, address) => {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: address }, (results, status) => {
-      if (status === 'OK') {
+      if (status === 'OK' && results && results[0]) {
         const latLng = results[0].geometry.location;
         if (type === 'pickup') {
           setPickupLatLng(latLng);
@@ -93,6 +92,7 @@ const BookingForm = () => {
         }
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
+        console.error('Geocode status:', status, 'Address:', address);
       }
     });
   };
@@ -121,16 +121,14 @@ const BookingForm = () => {
         body: JSON.stringify(bookingData),
       });
 
-      const responseText = await response.text(); // Get raw response text
+      const responseText = await response.text(); 
 
-      // Log the raw response for debugging
       console.log('Raw response:', responseText);
 
       if (!response.ok) {
         throw new Error('Failed to create booking');
       }
 
-      // Attempt to parse the response as JSON
       try {
         const data = JSON.parse(responseText);
         setBookingStatus(`Booking confirmed! ID: ${data.id}`);
@@ -139,9 +137,7 @@ const BookingForm = () => {
         setBookingStatus(`Error: Received an invalid response from the server`);
       }
 
-      // Optionally reset the form here after successful booking
       resetForm();
-
     } catch (error) {
       console.error('Error in handleSubmit:', error);
       setBookingStatus(`Error: ${error.message}`);
@@ -156,8 +152,8 @@ const BookingForm = () => {
       pickupAddress: '',
       extraAddress: '',
       dropOffAddress: '',
-      date: '', // Reset date
-      time: '', // Reset time
+      date: '',
+      time: '',
     });
     setPickupLatLng(null);
     setDropOffLatLng(null);
@@ -216,7 +212,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Pickup Address:</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('pickup', formData.pickupAddress)} >
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('pickup', formData.pickupAddress)}>
                   <input
                     type="text"
                     name="pickupAddress"
@@ -229,7 +225,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Extra Address (Optional):</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('extra', formData.extraAddress)} >
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('extra', formData.extraAddress)}>
                   <input
                     type="text"
                     name="extraAddress"
@@ -241,7 +237,7 @@ const BookingForm = () => {
               </div>
               <div>
                 <label>Dropoff Address:</label>
-                <Autocomplete onPlaceChanged={() => handleAutocomplete('dropoff', formData.dropOffAddress)} >
+                <Autocomplete onPlaceChanged={() => handleAutocomplete('dropoff', formData.dropOffAddress)}>
                   <input
                     type="text"
                     name="dropOffAddress"
@@ -252,7 +248,6 @@ const BookingForm = () => {
                   />
                 </Autocomplete>
               </div>
-              
               <div>
                 <label>Date:</label>
                 <input
@@ -263,7 +258,6 @@ const BookingForm = () => {
                   required
                 />
               </div>
-              
               <div>
                 <label>Time:</label>
                 <input
